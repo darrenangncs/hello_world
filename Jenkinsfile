@@ -1,41 +1,24 @@
 pipeline {
     agent any
-
-    tools {
-        maven 'Maven 3.9.4' // Adjust the Maven version as needed
-    }
-
+ 
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/darrenangncs/hello_world.git', branch: 'main'
+                // Checkout the code from the repository
+                git 'https://github.com/dennisang-NCS/HelloWorld.git'
             }
         }
-
         stage('Build') {
             steps {
-                bat 'mvn clean install'
+                // Compile the Java program and package it
+                bat 'mvn package'
             }
         }
-
-        stage('Test') {
+        stage('Run') {
             steps {
-                bat 'mvn test'
+                // Run the Java program
+                bat 'java -cp target/classes com.example.App'
             }
-        }
-
-        stage('Deploy') {
-            steps {
-                // Add your deployment steps here
-                echo 'Executing steps for example-branch'
-            }
-        }
-    }
-
-    post {
-        always {
-            junit '**/target/surefire-reports/*.xml'
-            archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
         }
     }
 }
