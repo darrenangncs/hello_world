@@ -21,4 +21,17 @@ pipeline {
             }
         }
     }
+    post {
+        always {
+            echo 'Cleaning up...'
+            // Add teardown steps here
+            deleteDir() // Deletes the workspace
+        }
+        success {
+            echo 'Pipeline succeeded!'
+        }
+        failure {
+            echo 'Pipeline failed!'
+        }
+    }
 }
